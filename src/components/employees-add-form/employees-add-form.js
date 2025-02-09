@@ -18,7 +18,14 @@ class EmployeesAddForm extends Component {
 
     onFormSubmit = (e) => {
         e.preventDefault();
-        console.log("Форма работает ", this.state.name)
+        console.log("Форма работает ", this.state.name);
+
+        const newItem = {
+            name: this.state.name,
+            salary: this.state.salary
+        }
+
+        console.log(newItem)
     }
 
     render () {
