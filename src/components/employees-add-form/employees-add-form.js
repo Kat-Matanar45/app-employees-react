@@ -1,5 +1,6 @@
 import './employees-add-form.css'
 import { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 class EmployeesAddForm extends Component {
     constructor(props) {
@@ -18,14 +19,21 @@ class EmployeesAddForm extends Component {
 
     onFormSubmit = (e) => {
         e.preventDefault();
-        console.log("Форма работает ", this.state.name);
+
+        const {name, salary} = this.state;
+
+        if(name.trim() === '' || salary.trim() === '') {return}
 
         const newItem = {
-            name: this.state.name,
-            salary: this.state.salary
+            id: uuidv4(),
+            name: name,
+            salary: salary,
+            increase: false
         }
 
-        console.log(newItem)
+        this.props.onAddItem(newItem);
+        this.setState({name:'', salary:''})
+        
     }
 
     render () {
