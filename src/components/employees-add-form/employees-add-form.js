@@ -22,12 +22,12 @@ class EmployeesAddForm extends Component {
 
         const {name, salary} = this.state;
 
-        if(name.trim() === '' || salary.trim() === '') {return}
+        if(name.trim() === '') {return};
 
         const newItem = {
             id: uuidv4(),
             name: name,
-            salary: salary,
+            salary: salary.trim() === '' ? '1000' : salary,
             increase: false
         }
 
