@@ -22,7 +22,7 @@ class EmployeesAddForm extends Component {
 
         const {name, salary} = this.state;
 
-        if(name.trim() === '') {return};
+        if(name.trim() === '' || name.trim().length < 3) {return};
 
         const newItem = {
             id: uuidv4(),
