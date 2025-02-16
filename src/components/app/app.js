@@ -16,9 +16,7 @@ class App extends Component {
                 {name: 'Вася Пупкин', salary: 800, increase: false, nameLike: true, id: 0},
                 {name: 'Иван Иванов', salary: 3000, increase: true, nameLike: false, id: 1},
                 {name: 'Кирилл Денисов', salary: 5000, increase: false, nameLike: false, id: 2}
-            ],
-            total: 0,
-            totalIncrease: 0
+            ]
         }
     }
 
@@ -64,12 +62,15 @@ class App extends Component {
     }
 
     render() {
-        const {data, total, totalIncrease} = this.state
+        const {data} = this.state
+
+        const total = data.length;
+        const totalIncrease = data.filter(item => item.increase).length;
 
         return (
             <div className="app">
                 <AppInfo
-                    total= {total}
+                    total= {total} 
                     totalIncrease= {totalIncrease}
                 />
     
