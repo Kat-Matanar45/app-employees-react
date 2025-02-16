@@ -13,10 +13,12 @@ class App extends Component {
         super(props)
         this.state = {
             data: [
-                {name: 'Вася Пупкин', salary: 800, increase: false, id: 0},
-                {name: 'Иван Иванов', salary: 3000, increase: true, id: 1},
-                {name: 'Кирилл Денисов', salary: 5000, increase: false, id: 2}
-            ]
+                {name: 'Вася Пупкин', salary: 800, increase: false, nameLike: true, id: 0},
+                {name: 'Иван Иванов', salary: 3000, increase: true, nameLike: false, id: 1},
+                {name: 'Кирилл Денисов', salary: 5000, increase: false, nameLike: false, id: 2}
+            ],
+            total: 0,
+            totalIncrease: 0
         }
     }
 
@@ -36,12 +38,40 @@ class App extends Component {
         })
     }
 
+    onToggleIncrease = (id) => {
+        this.setState(({data}) => ({
+                data: data.map(item => {
+                    if (item.id === id) {
+                        return {...item, increase: !item.increase}
+                    };
+                    return item;
+                })
+            })
+        )
+    }
+
+    onToggleLike = (id) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if(item.id === id) {
+                    return {...item, nameLike: !item.nameLike}
+                };
+                return item
+            })
+        })
+
+        )
+    }
+
     render() {
-        const {data} = this.state
+        const {data, total, totalIncrease} = this.state
 
         return (
             <div className="app">
-                <AppInfo/>
+                <AppInfo
+                    total= {total}
+                    totalIncrease= {totalIncrease}
+                />
     
                 <div className="search-panel">
                     <SearchPanel/>
@@ -51,6 +81,8 @@ class App extends Component {
                 <EmployeesList 
                     data= {data}
                     onDelete={this.deleteItem}
+                    onToggleIncrease={this.onToggleIncrease}
+                    onToggleLike={this.onToggleLike}
                     />
                 <EmployeesAddForm
                     onAddItem={this.addItem}

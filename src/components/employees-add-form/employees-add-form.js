@@ -28,7 +28,8 @@ class EmployeesAddForm extends Component {
             id: uuidv4(),
             name: name,
             salary: salary.trim() === '' ? '1000' : salary,
-            increase: false
+            increase: false,
+            nameLike: false
         }
 
         this.props.onAddItem(newItem);
