@@ -16,7 +16,8 @@ class App extends Component {
                 {name: 'Вася Пупкин', salary: 800, increase: false, nameLike: true, id: 0},
                 {name: 'Иван Иванов', salary: 3000, increase: true, nameLike: false, id: 1},
                 {name: 'Кирилл Денисов', salary: 5000, increase: false, nameLike: false, id: 2}
-            ]
+            ],
+            term: ''
         }
     }
 
@@ -48,11 +49,27 @@ class App extends Component {
         )
     }
 
+    onSearchEmp = (items, term) => {
+        if (term.length === 0) {
+            return items
+        }
+
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1
+        })
+    }
+
+    onUpdateSearch = (term) => {
+        this.setState({term})
+    }
+
     render() {
-        const {data} = this.state
+        const {data, term} = this.state
 
         const total = data.length;
         const totalIncrease = data.filter(item => item.increase).length;
+
+        const visibleData = this.onSearchEmp(data, term);
 
         return (
             <div className="app">
@@ -62,12 +79,14 @@ class App extends Component {
                 />
     
                 <div className="search-panel">
-                    <SearchPanel/>
+                    <SearchPanel
+                    onUpdateSearch= {this.onUpdateSearch}
+                    />
                     <AppFilter/>
                 </div>
     
                 <EmployeesList 
-                    data= {data}
+                    data= {visibleData}
                     onDelete={this.deleteItem}
                     onToggleProp={this.onToggleProp}
                     />
