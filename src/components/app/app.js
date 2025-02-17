@@ -63,6 +63,23 @@ class App extends Component {
         this.setState({term})
     }
 
+    onClickFilter = (e) => {
+
+        let eProp = e.currentTarget.getAttribute('data-toggle');
+        let totalLike;
+        
+            if (eProp === 'salary') {
+                totalLike = this.state.data.filter(item => item.salary > 1000)    
+            } 
+            if (eProp === 'like') {
+                totalLike = this.state.data.filter(item => item.nameLike)
+            }
+
+            this.setState({
+                data: totalLike
+            })
+    }
+
     render() {
         const {data, term} = this.state
 
@@ -82,7 +99,10 @@ class App extends Component {
                     <SearchPanel
                     onUpdateSearch= {this.onUpdateSearch}
                     />
-                    <AppFilter/>
+                    <AppFilter
+                    data={data}
+                    onClickFilter={this.onClickFilter}
+                    />
                 </div>
     
                 <EmployeesList 
