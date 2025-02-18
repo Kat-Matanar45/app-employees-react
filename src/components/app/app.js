@@ -17,7 +17,8 @@ class App extends Component {
                 {name: 'Иван Иванов', salary: 3000, increase: true, nameLike: false, id: 1},
                 {name: 'Кирилл Денисов', salary: 5000, increase: false, nameLike: false, id: 2}
             ],
-            term: ''
+            term: '',
+            filter: 'all'
         }
     }
 
@@ -63,30 +64,28 @@ class App extends Component {
         this.setState({term})
     }
 
-    onClickFilter = (e) => {
+    filterPost = (items, filter) => {
+        switch(filter) {
+            case 'like':
+                return items.filter(item => item.nameLike);
+            case 'salary1000':
+                return items.filter(item => item.salary > 1000);
+            default: 
+                return items
+        }
+    }
 
-        let eProp = e.currentTarget.getAttribute('data-toggle');
-        let totalLike;
-        
-            if (eProp === 'salary') {
-                totalLike = this.state.data.filter(item => item.salary > 1000)    
-            } 
-            if (eProp === 'like') {
-                totalLike = this.state.data.filter(item => item.nameLike)
-            }
-
-            this.setState({
-                data: totalLike
-            })
+    onFilterSelect = (filter) => {
+        this.setState({filter})
     }
 
     render() {
-        const {data, term} = this.state
+        const {data, term, filter} = this.state
 
         const total = data.length;
         const totalIncrease = data.filter(item => item.increase).length;
 
-        const visibleData = this.onSearchEmp(data, term);
+        const visibleData = this.filterPost (this.onSearchEmp(data, term), filter);
 
         return (
             <div className="app">
@@ -100,8 +99,8 @@ class App extends Component {
                     onUpdateSearch= {this.onUpdateSearch}
                     />
                     <AppFilter
-                    data={data}
-                    onClickFilter={this.onClickFilter}
+                    filter={filter}
+                    onFilterSelect={this.onFilterSelect}
                     />
                 </div>
     
