@@ -1,7 +1,22 @@
+import { Component } from 'react';
 import './employees-list-item.css'
 
-const EmployeesListItem = (props) => {
-        const {name, salary, onDelete, onToggleProp, nameLike, increase} = props;
+class EmployeesListItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: ''
+        }
+    }
+
+    onUpdateValue = (e) => {
+        const value = e.target.value.slice(0, -1);
+        this.setState({value})
+        this.props.onUpdateSalary(value)
+    }
+
+    render() {
+        const {name, salary, onDelete, onToggleProp, nameLike, increase} = this.props;
 
         let classNames = "list-group-item d-flex justify-content-between";
         if (increase) {classNames += ' increase'}
@@ -12,7 +27,7 @@ const EmployeesListItem = (props) => {
                 <span className='list-group-item-label' onClick={onToggleProp} data-toggle='nameLike'>
                 {name}
                 </span>
-                <input type="text" className="list-group-item-input" defaultValue={salary + "$"}/>
+                <input type="text" className="list-group-item-input" defaultValue={salary + "$"} onChange={this.onUpdateValue}/>
                 <div className="d-flex justify-content-center align-items-center">
                     <button type='button' className="btn-cookie btn-sm" onClick={onToggleProp} data-toggle='increase'>
                     <i className="fas fa-cookie"></i>
@@ -26,6 +41,7 @@ const EmployeesListItem = (props) => {
                 </div>
             </li>
         )
+    }
     }
 
 
