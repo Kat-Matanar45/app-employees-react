@@ -4,6 +4,7 @@ const AppFilter = (props) => {
     const buttonData = [
         {name: 'all', text: "Все сотрудники"},
         {name: 'like', text: "На повышение"},
+        {name: 'increase', text: "Премирование"},
         {name: 'salary1000', text: "ЗП больше 1000$"}
     ];
 

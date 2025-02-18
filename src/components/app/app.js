@@ -68,6 +68,8 @@ class App extends Component {
         switch(filter) {
             case 'like':
                 return items.filter(item => item.nameLike);
+            case 'increase': 
+                return items.filter(item => item.increase);
             case 'salary1000':
                 return items.filter(item => item.salary > 1000);
             default: 
